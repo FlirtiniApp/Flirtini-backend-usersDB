@@ -1,0 +1,162 @@
+openapi: '3.0.3'
+info:
+  title: Flirtini users API
+  description: API for managing Flirtini users
+  version: '1.0'
+  contact:
+    name: Flirtini Team
+servers:
+  - url: http://localhost:3000
+    description: Localhost
+  - url: http:// #must change, forgot it :p
+    description: Work Server
+  - url: http://192.168.1.102:3000
+    description: Home Server
+tags:
+  - name: User
+    description: Operations related to user management 
+paths:
+  /users/{id}:
+    get:
+      operationId: getAllOrOneUser
+      description: Get all or one user
+      tags:
+        - User
+      summary: Get users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: User ID to retrieve a specific user, if provided with 'all' it retrieves all users
+      responses:
+        '200':
+          description: User(s) retrieved successfully
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+    put:
+      operationId: updateUser
+      tags:
+        - User
+      description: Update a user
+      summary: Update a user
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: User ID to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: User login
+                password:
+                  type: string
+                  description: User password
+                email:
+                  type: string
+                  description: User email
+                favouriteDrinks:
+                  type: array
+                  items:
+                    type: string
+                  description: List of user's favourite drinks
+                favouriteIngredients:
+                  type: array
+                  items:
+                    type: string
+                  description: List of user's favourite ingredients
+                friends: 
+                  type: array
+                  items:
+                    type: string
+                  description: List of user's friends
+              required:
+                - login
+                - password
+                - email
+      responses:
+        '200':
+          description: User updated successfully
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error'
+    delete:
+      operationId: deleteUser
+      tags:
+        - User
+      description: Delete a user
+      summary: Delete a user
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: User ID to delete
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error'
+
+  /users:
+    post:
+      operationId: creatUser
+      tags: 
+        - User
+      description: Create a new user
+      summary: Create a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: User login
+                password:
+                  type: string
+                  description: User password
+                email:
+                  type: string
+                  description: User email
+                favouriteDrinks:
+                  type: array
+                  items:
+                    type: string
+                  description: List of user's favourite drinks
+                favouriteIngredients:
+                  type: array
+                  items:
+                    type: string
+                  description: List of user's favourite ingredients
+                friends: 
+                  type: array
+                  items:
+                    type: string
+                  description: List of user's friends
+              required:
+                - login
+                - password
+                - email
+      responses:
+        '201':
+          description: User created successfully
+        '500':
+          description: Internal server error'

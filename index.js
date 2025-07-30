@@ -30,6 +30,10 @@ async function getUserHandler(req, res) {
 
         const users = id === "all" ? await User.find({}) : await User.findById(id);
 
+        if (!users) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
         res.status(200).json(users);
     }
     catch (error) {
@@ -84,13 +88,13 @@ async function deleteUserHandler(req, res) {
 }
 
 // All users retrieval route
-app.get('/users/get/:id', getUserHandler);
+app.get('/users/:id', getUserHandler);
 
 // User creation route
-app.post('/users/create', createUserHandler);
+app.post('/users/', createUserHandler);
 
 // User update route
-app.put('/users/update/:id', updateUserHandler);
+app.put('/users/:id', updateUserHandler);
 
 // User deletion route
-app.delete('/users/delete/:id', deleteUserHandler);    
+app.delete('/users/:id', deleteUserHandler);    
