@@ -35,7 +35,9 @@ async function createUserHandler(req, res) {
 // Handler for getting all users
 async function getUserHandler(req, res) {
     try {
-        const users = await User.find({});
+        const {id} = req.params;
+
+        const users = id === "all" ? await User.find({}) : await User.findById(id);
         res.status(200).json(users);
     }
     catch (error) {
@@ -47,4 +49,4 @@ async function getUserHandler(req, res) {
 app.post('/users/create', createUserHandler);
             
 // All users retrieval route
-app.get('/users', getUserHandler);
+app.get('/users/:id', getUserHandler);
