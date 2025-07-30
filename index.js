@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/user.model');
@@ -86,7 +87,7 @@ app.post('/users/create', createUserHandler);
 
 // All users retrieval route
 app.get('/users/:id', getUserHandler);
-    
+
 // User update route
 app.put('/users/:id', updateUserHandler);
 
