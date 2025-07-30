@@ -1,8 +1,10 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const port = 3000
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/user.model');
@@ -21,17 +23,6 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_P
         console.log(err);
     });
 
-
-// Handler for creating a user
-async function createUserHandler(req, res) {
-    try {
-        const user = await User.create(req.body);
-        res.status(201).json(user);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
 // Handler for getting users
 async function getUserHandler(req, res) {
     try {
@@ -42,6 +33,16 @@ async function getUserHandler(req, res) {
         res.status(200).json(users);
     }
     catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// Handler for creating a user
+async function createUserHandler(req, res) {
+    try {
+        const user = await User.create(req.body);
+        res.status(201).json(user);
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
@@ -82,14 +83,14 @@ async function deleteUserHandler(req, res) {
     }
 }
 
+// All users retrieval route
+app.get('/users/get/:id', getUserHandler);
+
 // User creation route
 app.post('/users/create', createUserHandler);
 
-// All users retrieval route
-app.get('/users/:id', getUserHandler);
-
 // User update route
-app.put('/users/:id', updateUserHandler);
+app.put('/users/update/:id', updateUserHandler);
 
 // User deletion route
-app.delete('/users/:id', deleteUserHandler);    
+app.delete('/users/delete/:id', deleteUserHandler);    

@@ -4,7 +4,7 @@ const UserSchema = mongoose.Schema(
     {
         login: {
             type: String,
-            required: [, 'Login is required'],
+            required: [true, 'Login is required'],
             unique: true,
         },
         password: {
