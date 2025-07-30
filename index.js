@@ -4,7 +4,7 @@ const port = 3000
 app.use(express.json());
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
-const User = require('./models/user.model'); 
+const User = require('./models/user.model');
 
 // Connect to the database and start the server
 console.log("Connecting to database...");
@@ -34,7 +34,7 @@ async function createUserHandler(req, res) {
 // Handler for getting users
 async function getUserHandler(req, res) {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
 
         const users = id === "all" ? await User.find({}) : await User.findById(id);
 
@@ -48,7 +48,7 @@ async function getUserHandler(req, res) {
 // Handler for updating a user
 async function updateUserHandler(req, res) {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
 
         const newUser = await User.findByIdAndUpdate(id, req.body, { new: true });
 
@@ -63,11 +63,32 @@ async function updateUserHandler(req, res) {
     }
 }
 
+// Handler for deleting a user
+async function deleteUserHandler(req, res) {
+    try {
+        const { id } = req.params;
+
+        const deletedUser = await User.findByIdAndDelete(id);
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'User deleted successfully' });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 // User creation route
 app.post('/users/create', createUserHandler);
-            
+
 // All users retrieval route
 app.get('/users/:id', getUserHandler);
-
+    
 // User update route
 app.put('/users/:id', updateUserHandler);
+
+// User deletion route
+app.delete('/users/:id', deleteUserHandler);    
