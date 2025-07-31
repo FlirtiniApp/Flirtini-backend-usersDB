@@ -30,7 +30,24 @@ const UserSchema = mongoose.Schema(
             type: [String],
             required: false,
             default: []
-        }
+        },
+        phoneNumber: {
+            type: String,
+            required: false,
+        },
+        lists: [
+            {
+                name: {
+                    type: String,
+                    required: false
+                },
+                drinks: {
+                    type: [String],
+                    required: false,
+                    default: []
+                }
+            }
+        ]
     },
     {
         timestamps: true,

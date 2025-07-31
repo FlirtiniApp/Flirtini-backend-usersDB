@@ -151,6 +151,23 @@ paths:
                   items:
                     type: string
                   description: List of user's friends
+                phoneNumber:
+                  type: string
+                  description: User phone number
+                lists:
+                  type: array
+                  description: List collections with a name and a list of strings
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Name of the list
+                      drinks:
+                        type: array
+                        items:
+                          type: string
+                        description: List of strings in the list
               required:
                 - login
                 - password
