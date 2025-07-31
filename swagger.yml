@@ -8,7 +8,7 @@ info:
 servers:
   - url: http://localhost:3000
     description: Localhost
-  - url: http:// #must change, forgot it :p
+  - url: http://172.24.3.84:3000
     description: Work Server
   - url: http://192.168.1.102:3000
     description: Home Server
