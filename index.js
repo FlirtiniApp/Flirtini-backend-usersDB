@@ -1,10 +1,16 @@
 const express = require('express')
 const cors = require('cors')
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+}
 const app = express()
 const port = 3000
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors(corsOptions));
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/user.model');
@@ -34,6 +40,8 @@ async function getUserHandler(req, res) {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        console.log(`Getting user(s): \x1b[32m${users.length}\x1b[0m`);
+
         res.status(200).json(users);
     }
     catch (error) {
@@ -55,6 +63,9 @@ async function createUserHandler(req, res) {
 async function updateUserHandler(req, res) {
     try {
         const { id } = req.params;
+
+        console.log("update for: ", id);
+        console.log("req.body", req.body);
 
         const newUser = await User.findByIdAndUpdate(id, req.body, { new: true });
 
@@ -91,7 +102,7 @@ async function deleteUserHandler(req, res) {
 app.get('/users/:id', getUserHandler);
 
 // User creation route
-app.post('/users/', createUserHandler);
+app.post('/users', createUserHandler);
 
 // User update route
 app.put('/users/:id', updateUserHandler);
