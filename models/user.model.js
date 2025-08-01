@@ -37,6 +37,7 @@ const UserSchema = mongoose.Schema(
         },
         lists: [
             {
+                _id: false,
                 name: {
                     type: String,
                     required: false
