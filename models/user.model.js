@@ -17,7 +17,7 @@ const UserSchema = mongoose.Schema(
             unique: true,
         },
         favouriteDrinks: {
-            type: [String],
+            type: [Number],
             required: false,
             default: []
         },

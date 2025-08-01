@@ -1,16 +1,10 @@
 const express = require('express')
 const cors = require('cors')
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-}
 const app = express()
 const port = 3000
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors(corsOptions));
+app.use(cors());
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/user.model');
@@ -40,7 +34,7 @@ async function getUserHandler(req, res) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        console.log(`Getting user(s): \x1b[32m${users.length}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
+        console.log(`Getting user(s): \x1b[32m${id === "all" ? users.length : users.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
 
         res.status(200).json(users);
     }
@@ -65,6 +59,11 @@ async function createUserHandler(req, res) {
 async function updateUserHandler(req, res) {
     try {
         const { id } = req.params;
+
+        if (!Number.isInteger(req.body.favouriteDrinks[0])) {
+            console.log("Invalid user ID format");
+            return res.status(400).json({ message: 'Invalid user ID format' });
+        }
 
         console.log("update for: ", id);
         console.log("req.body", req.body);
