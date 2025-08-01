@@ -60,9 +60,11 @@ async function updateUserHandler(req, res) {
     try {
         const { id } = req.params;
 
-        if (!Number.isInteger(req.body.favouriteDrinks[0])) {
-            console.log("Invalid user ID format");
-            return res.status(400).json({ message: 'Invalid user ID format' });
+        if (req.body.favouriteDrinks) {
+            if (!Number.isInteger(req.body.favouriteDrinks[0]) && req.body.favouriteDrinks) {
+                console.log("Invalid user ID format");
+                return res.status(400).json({ message: 'Invalid user ID format' });
+            }
         }
 
         console.log("update for: ", id);
