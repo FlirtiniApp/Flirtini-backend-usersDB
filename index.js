@@ -13,7 +13,7 @@ const User = require('./models/user.model');
 console.log("Connecting to database...");
 mongoose.connect(`mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PASSWORD}@flirtini.5tabe6e.mongodb.net/Flirtini?retryWrites=true&w=majority&appName=Flirtini`)
     .then(() => {
-        console.log("\x1b[33mConnected to database\x1b[0m");
+        console.log("\x1b[93mConnected to database\x1b[0m");
         app.listen(port, () => {
             console.log(`\x1b[35mApp listening on port ${port}.\x1b[0m`);
         });
@@ -48,7 +48,7 @@ async function createUserHandler(req, res) {
     try {
         const user = await User.create(req.body);
 
-        console.log(`\x1b[93mCreated\x1b[0m user: \x1b[32m${user.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
+        console.log(`\x1b[33mCreated\x1b[0m user: \x1b[32m${user.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
         res.status(201).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
