@@ -34,7 +34,7 @@ async function getUserHandler(req, res) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        console.log(`Getting user(s): \x1b[32m${id === "all" ? users.length : users.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
+        console.log(`\x1b[92mGetting\x1b[0m user(s): \x1b[32m${id === "all" ? users.length : users.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
 
         res.status(200).json(users);
     }
@@ -48,7 +48,7 @@ async function createUserHandler(req, res) {
     try {
         const user = await User.create(req.body);
 
-        console.log(`Created user: \x1b[32m${user.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
+        console.log(`\x1b[93mCreated\x1b[0m user: \x1b[32m${user.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
         res.status(201).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -67,16 +67,13 @@ async function updateUserHandler(req, res) {
             }
         }
 
-        console.log("update for: ", id);
-        console.log("req.body", req.body);
-
         const newUser = await User.findByIdAndUpdate(id, req.body, { new: true });
 
         if (!newUser) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        console.log(`Updated user: \x1b[32m${newUser.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
+        console.log(`\x1b[94mUpdated\x1b[0m user: \x1b[32m${newUser.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m with data: ${JSON.stringify(req.body)}`);
         res.status(200).json(newUser);
     }
     catch (error) {
@@ -95,7 +92,7 @@ async function deleteUserHandler(req, res) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        console.log(`Deleted user: \x1b[32m${deletedUser.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
+        console.log(`\x1b[31mDeleted\x1b[0m user: \x1b[32m${deletedUser.login}\x1b[0m at: \x1b[36m${new Date().toLocaleString()}\x1b[0m`);
         res.status(200).json({ message: 'User deleted successfully' });
     }
     catch (error) {
