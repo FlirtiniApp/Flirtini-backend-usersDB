@@ -11,10 +11,22 @@ const UserSchema = mongoose.Schema(
             type: String,
             required: [true, 'Password is required'],
         },
-        email:{
+        email: {
             type: String,
             required: [true, 'Email is required'],
             unique: true,
+        },
+        firstName: {
+            type: String,
+            required: [true, 'First name is required'],
+        },
+        lastName: {
+            type: String,
+            required: [true, 'First name is required'],
+        },
+        birthDate: {
+            type: Date,
+            required: [true, 'Birth date is required'],
         },
         favouriteDrinks: {
             type: [Number],
