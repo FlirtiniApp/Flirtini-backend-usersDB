@@ -22,7 +22,7 @@ const UserSchema = mongoose.Schema(
         },
         lastName: {
             type: String,
-            required: [true, 'First name is required'],
+            required: [true, 'Last name is required'],
         },
         birthDate: {
             type: Date,
