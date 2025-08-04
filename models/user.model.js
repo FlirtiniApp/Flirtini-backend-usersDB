@@ -28,16 +28,21 @@ const UserSchema = mongoose.Schema(
             type: Date,
             required: [true, 'Birth date is required'],
         },
-        favouriteDrinks: {
-            type: [Number],
-            required: false,
-            default: []
-        },
-        favouriteIngredients: {
-            type: [String],
-            required: false,
-            default: []
-        },
+        favouriteDrinks: [
+            {
+                _id: false,
+                drinkId: {
+                    type: Number,
+                    required: false,
+                    default: []
+                },
+                drinkName: {
+                    type: String,
+                    required: false,
+                    default: ''
+                }
+            }
+        ],
         friends: {
             type: [String],
             required: false,
@@ -55,7 +60,7 @@ const UserSchema = mongoose.Schema(
                     required: false
                 },
                 drinks: {
-                    type: [String],
+                    type: [Number],
                     required: false,
                     default: []
                 }
