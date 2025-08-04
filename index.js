@@ -59,8 +59,10 @@ async function createUserHandler(req, res) {
 async function updateUserHandler(req, res) {
     try {
         const { id } = req.params;
+        console.log(typeof req.body);
 
         const newUser = await User.findByIdAndUpdate(id, req.body, { new: true });
+
 
         if (!newUser) {
             return res.status(404).json({ message: 'User not found' });

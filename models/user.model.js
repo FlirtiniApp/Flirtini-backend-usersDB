@@ -29,12 +29,12 @@ const UserSchema = mongoose.Schema(
             required: [true, 'Birth date is required'],
         },
         favouriteDrinks: [
-            {
+            {   
                 _id: false,
                 drinkId: {
                     type: Number,
                     required: false,
-                    default: []
+                    default: 0
                 },
                 drinkName: {
                     type: String,
